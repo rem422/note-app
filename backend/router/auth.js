@@ -32,9 +32,9 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     try {
-        if (!email || !password) {
-            res.status(400).res.json({message: "Please fill all fields"});
-        }
+        // if (!email || !password) {
+        //     res.status(400).res.json({message: "Please fill all fields"});
+        // }
         const user = await User.findOne({email});
         if(!user || (await user.matchPassword(password))) {
             res.status(401).json({message: "Invalid credentials"});
