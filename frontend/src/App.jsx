@@ -8,6 +8,7 @@ import Home from "./components/Home";
 
 const App = () => {
   const [ user, setUser ] = useState(null);
+  const [ loading, setLoading ] = useState(true);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -21,14 +22,26 @@ const App = () => {
       } catch(err) {
         localStorage.removeItem("token");
         console.error(err);
+      } finally {
+        setLoading(false);
       };
     };
     fetchUser();
   }, []);
 
+  if(loading) {
+    return (
+      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+        <div className="text-xl text-white">
+          Loading...
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-gray-500">
-      <Navbar user={user}/>
+      <Navbar user={user} setUser={setUser}/>
       <Routes>
         <Route 
           path="/login" 
