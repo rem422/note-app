@@ -11,6 +11,10 @@ const app = express();
 
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.send("Hello There");
+})
+
 app.use("/api/users", authRoutes);
 app.use("/api/notes", notesRoutes);
 
