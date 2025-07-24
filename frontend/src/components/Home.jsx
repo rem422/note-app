@@ -28,6 +28,23 @@ const fetchNotes = async () => {
         fetchNotes();
     }, []);
 
+    const handleDelete  = async (id) => {
+        try {
+            const token = localStorage.getItem("token");
+            if (!token) {
+                setError("No authentication token found. Please log in");
+                return;
+            }
+            await axios.delete(`/api/notes/${id}`, {
+                headers: {Authorization: `Bearer ${token}`}
+            });
+            setNotes(notes.filter((note) => note._id !== id));
+        } catch(err) {
+            console.error(err);
+            setError("Failed to delete note");
+        }
+    };
+
   return (
     <div className='container mx-auto px-4 py-8 min-h-screen bg-gray-500'>
         {error && <p className='text-red-400 mb-4'>{error}</p>}
@@ -39,7 +56,10 @@ const fetchNotes = async () => {
                     <p className='text-sm text-gray-400 mb-4'>{new Date(note.updatedAt).toLocaleString()}</p>
                     <div className='flex items-center space-x-2'>
                         <button className='bg-yellow-600 text-white px-3 py-1 rounded-md hover:bg-yellow-700'>Edit</button>
-                        <button className='bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'>Delete</button>
+                        <button 
+                            onClick={() => handleDelete(note._id)}
+                            className='bg-red-600 text-white px-3 py-1 rounded-md hover:bg-red-700'
+                        >Delete</button>
                     </div>
                 </div>
             ))}
