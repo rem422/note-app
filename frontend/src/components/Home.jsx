@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import NoteModal from './NoteModal';
+import { useLocation } from 'react-router-dom';
 
 const Home = () => {
 const [notes, setNotes] = useState([]);
 const [error, setError] = useState('');
 const [isModalOpen, setIsModalOpen] = useState(false);
 const [editNote, setEditNote] = useState(null);
-console.log(notes);
+const location = useLocation();
     
 const fetchNotes = async () => {
     try {
@@ -16,11 +17,19 @@ const fetchNotes = async () => {
             setError("No authentication token found. Please log in");
             return;
         }
-        const { data } = await axios.get("/api/notes", {
-            headers: { Authorization: `Bearer ${token}` },
-        });
-        console.log(data);
-        setNotes(data);
+      const searchParams = new URLSearchParams(location.search);
+      const search = searchParams.get("search") || "";
+      const { data } = await axios.get("/api/notes", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const filteredNotes = search
+        ? data.filter(
+            (note) =>
+              note.title.toLowerCase().includes(search.toLowerCase()) ||
+              note.description.toLowerCase().includes(search.toLowerCase())
+          )
+        : data;
+        setNotes(filteredNotes);
     } catch(err) {
         console.error(err);
         setError("Failed to fetch notes");
@@ -34,7 +43,7 @@ const fetchNotes = async () => {
 
     useEffect(() => {
         fetchNotes();
-    }, []);
+    }, [location.search]);
 
     const handleSaveNote = (newNote) => {
         if (editNote) {
@@ -73,7 +82,10 @@ const fetchNotes = async () => {
             note={editNote}
             onSave={handleSaveNote}
         />
-        <button className='fixed bottom-6 right-6 w-14 h-14 bg-gray-800 rounded-full text-white text-3xl shadow-lg hover:bg-gray-900 flex items-center justify-center'>
+        <button 
+            className='fixed bottom-6 right-6 w-14 h-14 bg-gray-800 rounded-full text-white text-3xl shadow-lg hover:bg-gray-900 flex items-center justify-center'
+            onClick={() => setIsModalOpen(true)}
+        >
             <span className='flex items-center justify-center h-full w-full'>+</span>
         </button>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
