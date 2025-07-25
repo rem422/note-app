@@ -12,11 +12,8 @@ const app = express();
 
 app.use(express.json());
 
-
-
 app.use("/api/users", authRoutes);
 app.use("/api/notes", notesRoutes);
-
 
 const __dirname = path.resolve();
 
