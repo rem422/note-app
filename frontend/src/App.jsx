@@ -40,7 +40,7 @@ const App = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-500">
+    <div className="min-h-screen bg-white">
       <Navbar user={user} setUser={setUser}/>
       <Routes>
         <Route 

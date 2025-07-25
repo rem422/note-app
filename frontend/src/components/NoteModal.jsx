@@ -43,9 +43,9 @@ const NoteModal = ({ isOpen, onClose, note, onSave }) => {
   
   if(!isOpen) return null;
   return (
-    <div className='fixed inset-0 bg-black/30 flex items-center justify-center z-50'>
-        <div className='bg-gray-800 p-6 rounded-lg shadow-xl w-full max-w-md'>
-          <h2 className='text-2xl font-semibold text-white mb-4'>
+    <div className='fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50'>
+        <div className='bg-white p-6 rounded-lg shadow-xl w-full max-w-md'>
+          <h2 className='text-2xl font-semibold text-gray-800 mb-4'>
             {note ? "Edit Note" : "Create Note"}
           </h2>
           {error && <p className='text-red-400 mb-4'>{error}</p>}
@@ -57,7 +57,7 @@ const NoteModal = ({ isOpen, onClose, note, onSave }) => {
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder='Title'
                 required
-                className='w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md outline-none focus:ring-2 focus:ring-blue-500'
+                className='w-full px-3 py-2 bg-gray-200 text-gray-800 border border-gray-100 rounded-md outline-none focus:ring-2 focus:ring-blue-500'
               />
             </div>
             <div>
@@ -68,7 +68,7 @@ const NoteModal = ({ isOpen, onClose, note, onSave }) => {
                 placeholder='Note Description'
                 rows={4}
                 required
-                className='w-full px-3 py-2 bg-gray-700 text-white border border-gray-600 rounded-md outline-none focus:ring-2 focus:ring-blue-500 resize-none'
+                className='w-full px-3 py-2 bg-gray-200 text-gray-800 border border-gray-100 rounded-md outline-none focus:ring-2 focus:ring-blue-500 resize-none'
               />
             </div>
             <div className='flex space-x-2'>
