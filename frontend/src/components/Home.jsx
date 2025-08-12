@@ -86,7 +86,7 @@ const fetchNotes = async () => {
             onSave={handleSaveNote}
         />
         <button 
-            className='fixed bottom-8 right-6 w-14 h-14 bg-blue-700 rounded-full text-white text-3xl shadow-lg hover:bg-blue-800 duration-100 flex items-center justify-center'
+            className='fixed bottom-6 right-6 w-14 h-14 bg-blue-700 rounded-full text-white text-3xl text-center shadow-lg hover:bg-blue-800 duration-100 flex items-center justify-center'
             onClick={() => setIsModalOpen(true)}
         >
             <span className='flex items-center justify-center h-full w-full'>+</span>
